@@ -1,8 +1,8 @@
 #! /usr/bin/python3
 
 ##--------------------------------------------------------------------\
-#   pso_basic
-#   './pso_basic/src/particle_swarm.py'
+#   pso_quantum
+#   './pso_quantum/src/particle_swarm.py'
 #   Particle swarm class. This class has been modified from the original
 #       to include message passing for UI integration, and underflow 
 #       and overflow min/max caps to accomodate wider user input
@@ -16,7 +16,7 @@
 #
 #
 #   Author(s): Jonathan Lundquist, Lauren Linkous
-#   Last update: June 14, 2024
+#   Last update: June 17, 2024
 ##--------------------------------------------------------------------\
 
 

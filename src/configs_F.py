@@ -1,14 +1,14 @@
 #! /usr/bin/python3
 
 ##--------------------------------------------------------------------\
-#   pso_basic
-#   './pso_basic/src/configs_F.py'
+#   pso_quantum
+#   './pso_quantum/src/configs_F.py'
 #   Constant values for objective function. Formatted for
 #       automating objective function integration
 #
 #
 #   Author(s): Lauren Linkous, Jonathan Lundquist
-#   Last update: May 20, 2024
+#   Last update: June 20, 2024
 ##--------------------------------------------------------------------\
 
 import sys
@@ -19,8 +19,8 @@ from constr_F import constr_F
 OBJECTIVE_FUNC = func_F
 CONSTR_FUNC = constr_F
 
-OBJECTIVE_FUNC_NAME = "pso_basic.func_F"
-CONSTR_FUNC_NAME = "pso_basic.constr_F"
+OBJECTIVE_FUNC_NAME = "pso_quantum.func_F"
+CONSTR_FUNC_NAME = "pso_quantum.constr_F"
 
 
 # problem dependent variables

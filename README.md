@@ -13,14 +13,14 @@ Now featuring AntennaCAT hooks for GUI integration and user input handling.
 * [Requirements](#requirements)
 * [Implementation](#implementation)
     * [Time-step adaptation](#time-step-adaptation)
-    * [Constraint Handling](#constraint-handling)z
+    * [Constraint Handling](#constraint-handling)
     * [Boundary Types](#boundary-types)
     * [Multi-Object Optimization](#multi-object-optimization)
     * [Objective Function Handling](#objective-function-handling)
-      * [Internal Objective Function Example](internal-objective-function-example)
+      * [Internal Objective Function Example](#internal-objective-function-example)
 * [Error Handling](#error-handling)
 * [Example Implementations](#example-implementations)
-    * [Basic PSO Example](#basic-pso-example)
+    * [Basic Swarm Example](#basic-swarm-example)
     * [Detailed Messages](#detailed-messages)
     * [Realtime Graph](#realtime-graph)
 * [References](#references)
@@ -140,7 +140,7 @@ In the particle_swarm.py class, the objective function is called twice. Some opt
 
 ## Example Implementations
 
-### Basic PSO Example
+### Basic Swarm Example
 main_test.py provides a sample use case of the optimizer. 
 
 ### Detailed Messages
@@ -159,6 +159,15 @@ NOTE: if you close the graph as the code is running, the code will continue to r
 ## References
 
 [1] J. Kennedy and R. Eberhart, "Particle swarm optimization," Proceedings of ICNN'95 - International Conference on Neural Networks, Perth, WA, Australia, 1995, pp. 1942-1948 vol.4, doi: 10.1109/ICNN.1995.488968.
+
+[2] quantum particle swarm optimization
+
+[3] quantum particle swarm optimization
+
+[4] Tutorial reference
+
+[5] Tutorial reference - how matrix math hadamard works
+
 
 ## Publications and Integration
 This software works as a stand-alone implementation, and as one of the optimizers integrated into AntennaCAT.

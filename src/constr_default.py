@@ -1,13 +1,13 @@
 #! /usr/bin/python3
 
 ##--------------------------------------------------------------------\
-#   pso_basic
-#   './pso_basic/src/constr_default.py'
+#   pso_quantum
+#   './pso_quantum/src/constr_default.py'
 #   Function for default constraints. Called if user does not pass in 
 #       constraints for objective function or problem being optimized. 
 #
 #   Author(s): Jonathan Lundquist, Lauren Linkous
-#   Last update: May 28, 2024
+#   Last update: June 17, 2024
 ##--------------------------------------------------------------------\
 
 

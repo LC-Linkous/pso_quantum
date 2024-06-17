@@ -1,13 +1,13 @@
 #! /usr/bin/python3
 
 ##-------------------------------------------------------------------------------\
-#   pso_basic
-#   './pso_basic/src/main_function_graph.py'
+#   pso_quantum
+#   './pso_quantum/src/main_function_graph.py'
 #   generates graphs for function based on constraints and configurations
 #   in-package demo for graphing the pareto front
 #
 #   Author(s): Lauren Linkous (LINKOUSLC@vcu.edu)
-#   Last update: June 3, 2024
+#   Last update: June 17, 2024
 ##-------------------------------------------------------------------------------\
 
 import numpy as np

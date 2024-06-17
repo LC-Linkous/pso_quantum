@@ -1,14 +1,14 @@
 #! /usr/bin/python3
 
 ##--------------------------------------------------------------------\
-#   pso_basic
-#   './pso_basic/src/constr_F.py'
+#   pso_quantum
+#   './pso_quantum/src/constr_F.py'
 #   Function for objective function constraints.
 #   Has 2 checks: 1 for the function limitations, 1 for float size
 #   Returns True if x array passes constraints check, False otherwise   
 #
 #   Author(s): Jonathan Lundquist, Lauren Linkous
-#   Last update: May 28, 2024
+#   Last update: June 20, 2024
 ##--------------------------------------------------------------------\
 
 
