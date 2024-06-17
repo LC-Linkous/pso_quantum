@@ -1,14 +1,19 @@
-# pso_basic
+# pso_quantum
 
-Simple particle swarm optimizer written in Python. Modified from the [adaptive timestep PSO optimizer](https://github.com/jonathan46000/pso_python) by [jonathan46000](https://github.com/jonathan46000) for data collection baseline. This repo removes the adaptive time modulation step of pso_python.
+# IN PROGRESS !!
+
+A 'quantum' particle swarm optimizer written in Python using several quantum inspired methods. Modified from the [adaptive timestep PSO optimizer](https://github.com/jonathan46000/pso_python) by [jonathan46000](https://github.com/jonathan46000). 
 
 Now featuring AntennaCAT hooks for GUI integration and user input handling.
 
 ## Table of Contents
 * [Particle Swarm Optimization](#particle-swarm-optimization)
+* [Quantum Inspired Optimization](#quantum-inspired-optimization)
+* [Quantum Particle Swarm Optimization](#quantum-particle-swarm-optimization)
 * [Requirements](#requirements)
 * [Implementation](#implementation)
-    * [Constraint Handling](#constraint-handling)
+    * [Time-step adaptation](#time-step-adaptation)
+    * [Constraint Handling](#constraint-handling)z
     * [Boundary Types](#boundary-types)
     * [Multi-Object Optimization](#multi-object-optimization)
     * [Objective Function Handling](#objective-function-handling)
@@ -22,11 +27,42 @@ Now featuring AntennaCAT hooks for GUI integration and user input handling.
 * [Publications and Integration](#publications-and-integration)
 * [Licensing](#licensing)  
 
+
 ## Particle Swarm Optimization
 
 Particle Swarm Optimization (PSO) is a popular nature-inspired optimization algorithm introduced in "Particle Swarm Optimization" [1] (J. Kennedy & R. Eberhart, 1995). It is inspired by the social behavior animal groups, often compared to birds flocking or fish schooling. PSO is used to find approximate solutions to complex optimization problems.
 
 PSO consists of a population (or swarm) of candidate solutions called particles. Each particle moves through the search space, influenced by its own best-known position and the best-known positions of the swarm. The algorithm combines exploration and exploitation to find the optimal solution.
+
+
+
+## Quantum Inspired Optimization
+
+Quantum-inspired algorithms take concepts from quantum mechanics, such as superposition and entanglement, and apply them in classical computation to solve optimization problems more effectively. 
+
+1) Superposition
+
+**Quantum Concept**: In quantum mechanics, a particle can exist in a superposition of multiple states simultaneously. For example, a quantum bit (qubit) can be in a state ∣0⟩∣0⟩, ∣1⟩∣1⟩, or any linear combination ∣ψ⟩=α∣0⟩+β∣1⟩∣ψ⟩=α∣0⟩+β∣1⟩, where αα and ββ are complex numbers.
+
+**Classical Adaptation**: In quantum-inspired algorithms, superposition can be interpreted as a probability distribution over multiple states. Instead of particles having a single position, they are represented by a probability distribution, reflecting the potential to be in various positions simultaneously.
+
+**Example in QPSO**: In the Quantum-inspired Particle Swarm Optimization (QPSO), a particle’s position is often updated using a probability distribution derived from both personal best and global best positions, rather than a deterministic position update. This allows particles to explore the search space more effectively.
+
+2) Entanglement
+
+**Quantum Concept**: Entanglement is a phenomenon where particles become interconnected such that the state of one particle directly affects the state of another, no matter the distance between them. This creates a strong correlation between the particles.
+
+**Classical Adaptation**: In quantum-inspired algorithms, entanglement can be represented as a dependency or correlation between particles. When one particle updates its position, it influences the position updates of other particles, promoting cooperative behavior among the particles in the swarm.
+
+**Example in QPSO**: In QPSO, the positions of particles might be updated using a combination of their personal best position and the global best position, creating a form of "entanglement" where particles are influenced by the best solutions found by the swarm, thus maintaining a level of coordination and cooperation.
+
+
+
+## Quantum Particle Swarm Optimization
+
+
+
+
 
 ## Requirements
 
@@ -52,6 +88,8 @@ zipp==3.18.1
 ```
 
 ## Implementation
+### Time-Step Adaptation 
+This particle swarm optimizers uses the mean absolute deviation of particle position as an adjustment to the time step, to prevent the particle overshoot problem.  This particle distribution is initialized to one when the swarm starts, so that the impact is boundary independent. 
 
 ### Constraint Handling
 Users must create their own constraint function for their problems, if there are constraints beyond the problem bounds.  This is then passed into the constructor. If the default constraint function is used, it always returns true (which means there are no constraints).
@@ -59,13 +97,13 @@ Users must create their own constraint function for their problems, if there are
 ### Boundary Types
 This PSO optimizer has 4 different types of bounds, Random (Particles that leave the area respawn), Reflection (Particles that hit the bounds reflect), Absorb (Particles that hit the bounds lose velocity in that direction), Invisible (Out of bound particles are no longer evaluated).
 
-Some updates have not incorporated appropriate handling for all boundary conditions. This bug is known and is being worked on. The most consistent boundary type at the moment is Random. If constraints are violated, but bounds are not, currently random bound rules are used to deal with this problem. 
+Some updates have not incorporated appropriate handling for all boundary conditions.  This bug is known and is being worked on.  The most consistent boundary type at the moment is Random.  If constraints are violated, but bounds are not, currently random bound rules are used to deal with this problem. 
 
 ### Multi-Object Optimization
-The no preference method of multi-objective optimization, but a Pareto Front is not calculated. Instead, the best choice (smallest norm of output vectors) is listed as the output.
+The no preference method of multi-objective optimization, but a Pareto Front is not calculated. Instead the best choice (smallest norm of output vectors) is listed as the output.
 
 ### Objective Function Handling
-The optimizer minimizes the absolute value of the difference from the target outputs and the evaluated outputs. Future versions may include options for function minimization absent target values. 
+The optimizer minimizes the absolute value of the difference from the target outputs and the evaluated outputs.  Future versions may include options for function minimization absent target values. 
 
 #### Internal Objective Function Example
 The current internal optimization function takes 3 inputs, and has 2 outputs. It was created as a simple 3-variable optimization objective function that would be quick to converge.  
@@ -111,7 +149,7 @@ main_test_details.py provides an example using a parent class, and the self.supp
 ### Realtime Graph
 
 <p align="center">
-        <img src="https://github.com/LC-Linkous/pso_python/blob/pso_basic/media/pso_graph.gif" alt="Example PSO Convergence" height="200">
+        <img src="https://github.com/LC-Linkous/pso_python/blob/main/media/pso_graph.gif" alt="Example PSO Convergence" height="200">
 </p>
 
 main_test_graph.py provides an example using a parent class, and the self.suppress_output and detailedWarnings flags to control error messages that are passed back to the parent class to be printed with a timestamp. Additionally, a realtime graph shows particle locations at every step.
@@ -130,4 +168,5 @@ Publications featuring the code in this repo will be added as they become public
 ## Licensing
 
 The code in this repository has been released under GPL-2.0
+
 
