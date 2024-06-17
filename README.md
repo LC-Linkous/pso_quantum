@@ -12,7 +12,6 @@ Now featuring AntennaCAT hooks for GUI integration and user input handling.
 * [Quantum Particle Swarm Optimization](#quantum-particle-swarm-optimization)
 * [Requirements](#requirements)
 * [Implementation](#implementation)
-    * [Time-step adaptation](#time-step-adaptation)
     * [Constraint Handling](#constraint-handling)
     * [Boundary Types](#boundary-types)
     * [Multi-Object Optimization](#multi-object-optimization)
@@ -38,7 +37,8 @@ PSO consists of a population (or swarm) of candidate solutions called particles.
 
 ## Quantum Inspired Optimization
 
-Quantum-inspired algorithms take concepts from quantum mechanics, such as superposition and entanglement, and apply them in classical computation to solve optimization problems more effectively. 
+Quantum-inspired algorithms take concepts from quantum mechanics, such as superposition and entanglement, and apply them in classical computation to solve optimization problems more effectively (depending on the problem type). Quantum Particle Swarm Optimization was introduced in 2004 [2] [3]. Paraphrased from [2], in PSO the location and velocity vectors are used to determine the trajectory of the particle, which because in Newtonian mechannics a particle moves along a determind trajectory. However, in quantum mechanics, the location and velocity vectors cannot be determined/known simultaneously due to uncertainty principle (Werner Heisenberg, 1927). 
+
 
 1) Superposition
 
@@ -46,7 +46,7 @@ Quantum-inspired algorithms take concepts from quantum mechanics, such as superp
 
 **Classical Adaptation**: In quantum-inspired algorithms, superposition can be interpreted as a probability distribution over multiple states. Instead of particles having a single position, they are represented by a probability distribution, reflecting the potential to be in various positions simultaneously.
 
-**Example in QPSO**: In the Quantum-inspired Particle Swarm Optimization (QPSO), a particle’s position is often updated using a probability distribution derived from both personal best and global best positions, rather than a deterministic position update. This allows particles to explore the search space more effectively.
+**Example in QPSO**: In the Quantum-inspired Particle Swarm Optimization, a particle’s position is often updated using a probability distribution derived from both personal best and global best positions, rather than a deterministic position update. This allows particles to explore the search space more effectively.
 
 2) Entanglement
 
@@ -60,7 +60,51 @@ Quantum-inspired algorithms take concepts from quantum mechanics, such as superp
 
 ## Quantum Particle Swarm Optimization
 
+Unlike traditional PSO, Quantum Particle Swarm Optimization (QPSO) doesn't use a velocity vector. Instead, it updates particle positions directly based on a probability distribution  based on the mean best position and a logarithmic factor, which has roots in the quantum mechanics principles mentioned previously. The QPSO update rule leverages quantum-inspired probabilistic movements to balance exploration and exploitation. By combining the best aspects of personal and global experiences and adding a stochastic component, QPSO can effectively search complex optimization landscapes. 
 
+
+ The key steps in QPSO include:
+
+1) **Mean Best Position (mb)**: This is a weighted average of the personal best position ($p$) and the global best position ($g$). It is calculated as:
+
+```math
+\text{minimize}: 
+\begin{cases}
+mb=\beta*p+(1−\beta)*g
+\end{cases}
+```
+
+Where:
+
+* $\beta$ is a parameter controlling the influence between the personal and global best positions.
+
+
+2) **Position Update**: In QPSO, instead of updating the velocity and then the position, we directly update the position using quantum mechanics-inspired rules. The update rule is:
+
+```math
+\text{minimize}: 
+\begin{cases}
+\[ \x_i(t+1) = mb \pm \beta \cdot |\lvert p - g \rvert| \cdot \log(1/u_2) \]
+\end{cases}
+```
+
+Where:
+
+* $\beta$ is a user-defined parameter influencing the convergence behavior.
+* $p$ is the personal best position of the particle.
+* $g$ is the global best position of the swarm.
+* $u^2$​ is a uniformly distributed random number in the range (0, 1).
+* The logarithmic term $log(1/u_2​)$ comes from the distribution properties of quantum systems.
+* $\bet \cdot ∣p−g∣ $ scales the exploration step based on the distance between the personal and global best positions.
+* $log(1/u_2​)$ introduces a random factor with a bias towards smaller values (since $u_2$​ is between 0 and 1, $log(1/u_2​)$ is negative, making $−log⁡(1/u_2)$ positive).
+
+
+
+The QPSO update rule is based on the quantum mechanics principle where particles have a probability distribution of being in different positions. The position update rule can be seen as a way to explore the search space more effectively through 2 key factors:
+
+**Diverse Exploration**: The term $log⁡(1/u_2)$ helps in creating a wide range of possible moves, allowing the particles to explore the search space extensively. The logarithmic function is chosen because it provides a heavy-tailed distribution, meaning particles can make both small and large jumps, avoiding local minima and encouraging global exploration.
+
+**Balanced Exploitation**: The combination of $mb$, $p$, and $g$ ensures that the particles are guided towards promising regions of the search space, leveraging both individual experience (personal_best) and collective knowledge (global_best).
 
 
 
@@ -88,8 +132,6 @@ zipp==3.18.1
 ```
 
 ## Implementation
-### Time-Step Adaptation 
-This particle swarm optimizers uses the mean absolute deviation of particle position as an adjustment to the time step, to prevent the particle overshoot problem.  This particle distribution is initialized to one when the swarm starts, so that the impact is boundary independent. 
 
 ### Constraint Handling
 Users must create their own constraint function for their problems, if there are constraints beyond the problem bounds.  This is then passed into the constructor. If the default constraint function is used, it always returns true (which means there are no constraints).
@@ -160,9 +202,9 @@ NOTE: if you close the graph as the code is running, the code will continue to r
 
 [1] J. Kennedy and R. Eberhart, "Particle swarm optimization," Proceedings of ICNN'95 - International Conference on Neural Networks, Perth, WA, Australia, 1995, pp. 1942-1948 vol.4, doi: 10.1109/ICNN.1995.488968.
 
-[2] quantum particle swarm optimization
+[2] Jun Sun, Bin Feng and Wenbo Xu, "Particle swarm optimization with particles having quantum behavior," Proceedings of the 2004 Congress on Evolutionary Computation (IEEE Cat. No.04TH8753), Portland, OR, USA, 2004, pp. 325-331 Vol.1, doi: 10.1109/CEC.2004.1330875.
 
-[3] quantum particle swarm optimization
+[3] Jun Sun, Wenbo Xu and Bin Feng, "A global search strategy of quantum-behaved particle swarm optimization," IEEE Conference on Cybernetics and Intelligent Systems, 2004., Singapore, 2004, pp. 111-116 vol.1, doi: 10.1109/ICCIS.2004.1460396.
 
 [4] Tutorial reference
 
