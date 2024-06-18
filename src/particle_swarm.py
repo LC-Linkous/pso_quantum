@@ -3,7 +3,7 @@
 ##--------------------------------------------------------------------\
 #   pso_quantum
 #   './pso_quantum/src/particle_swarm.py'
-#   Particle swarm class. This class has been modified from the original
+#   'quantum' particle swarm class. This class has been modified from the original
 #       to include message passing for UI integration, and underflow 
 #       and overflow min/max caps to accomodate wider user input
 #       options in AntennaCAT.
@@ -95,7 +95,6 @@ class swarm:
 
             '''
             self.M                      : An array of current particle locations.
-            self.V                      : An array of current particle velocities. NOT USED.
             self.beta                   : Float constant controlling influence between the personal and global best positions
             self.output_size            : An integer value for the output size of obj func (y-vals)
             self.input_size             : An integer value for the input size of the obj func (x-vals)
@@ -118,12 +117,9 @@ class swarm:
             self.boundary               : Boundary conditions for the optimization problem.
             self.Flist                  : List to store fitness values.
             self.Fvals                  : List to store fitness values.
-            self.vlimit                 : Velocity limits for the particles.
             self.Mlast                  : Last location of particle
             self.InitDeviation          : Initial deviation of particles.
-            self.delta_t                : static time modulation. retained for comparison to original repo. and swarm export
             '''
-            self.V = [] # NOT USED in this version. kept for export comparison
             self.beta = beta
             self.output_size = output_size
             self.input_size = input_size
@@ -145,11 +141,10 @@ class swarm:
             self.allow_update = 0                                           
             self.boundary = boundary                                       
             self.Flist = []                                                 
-            self.Fvals = []                                                 
-            self.vlimit = None  # NOT USED in this version. kept for export comparison                                            
+            self.Fvals = []          
             self.Mlast = 1*self.ubound                                      
             self.InitDeviation = self.absolute_mean_deviation_of_particles()
-            self.delta_t = 1    # NOT USED in this version. kept for export comparison
+
 
             self.error_message_generator("swarm successfully initialized")
             
@@ -207,8 +202,6 @@ class swarm:
         constr = self.constr_func(self.M[:,particle])
         if (update > 0) and constr:
             self.M[:,particle] = 1*self.Mlast
-            NewV = np.multiply(-1,self.V[update-1,particle])
-            self.V[update-1,particle] = NewV
         if not constr:
             self.random_bound(particle)
 
@@ -217,7 +210,6 @@ class swarm:
         constr = self.constr_func(self.M[:,particle])
         if (update > 0) and constr:
             self.M[:,particle] = 1*self.Mlast
-            self.V[update-1,particle] = 0
         if not constr:
             self.random_bound(particle)
 
@@ -286,8 +278,6 @@ class swarm:
                 str(self.current_particle) +"\n" + \
                 "Current Particle Location\n" + \
                 str(self.M[:,self.current_particle]) +"\n" + \
-                "Delta T\n" + \
-                str(self.delta_t) +"\n" + \
                 "Absolute mean deviation\n" + \
                 str(self.absolute_mean_deviation_of_particles()) +"\n" + \
                 "-----------------------------"
@@ -315,7 +305,6 @@ class swarm:
         swarm_export = {'lbound': self.lbound,
                         'ubound': self.ubound,
                         'M': self.M,
-                        'V': self.V,
                         'Gb': self.Gb,
                         'F_Gb': self.F_Gb,
                         'Pb': self.Pb,
@@ -326,7 +315,6 @@ class swarm:
                         'maxit': self.maxit,
                         'E_TOL': self.E_TOL,
                         'iter': self.iter,
-                        'delta_t': self.delta_t,
                         'current_particle': self.current_particle,
                         'number_of_particles': self.number_of_particles,
                         'allow_update': self.allow_update,
@@ -342,7 +330,6 @@ class swarm:
         self.lbound = swarm_export['lbound'] 
         self.ubound = swarm_export['ubound'] 
         self.M = swarm_export['M'] 
-        self.V = swarm_export['V'] 
         self.Gb = swarm_export['Gb'] 
         self.F_Gb = swarm_export['F_Gb'] 
         self.Pb = swarm_export['Pb'] 
@@ -353,7 +340,6 @@ class swarm:
         self.maxit = swarm_export['maxit'] 
         self.E_TOL = swarm_export['E_TOL'] 
         self.iter = swarm_export['iter'] 
-        self.delta_t = swarm_export['delta_t'] 
         self.current_particle = swarm_export['current_particle'] 
         self.number_of_particles = swarm_export['number_of_particles'] 
         self.allow_update = swarm_export['allow_update'] 
