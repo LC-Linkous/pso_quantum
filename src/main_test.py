@@ -25,7 +25,7 @@ if __name__ == "__main__":
     LB = [[0.21, 0, 0.1]]        # Lower boundaries
     UB = [[1, 1, 0.5]]           # Upper boundaries
     WEIGHTS = [[0.7, 1.5, 0.5]]  # Update vector weights
-    VLIM = 0.5                   # Initial velocity limit
+    IN_VARS = 3                  # Number of input variables (x-values)
     OUT_VARS = 2                 # Number of output variables (y-values)
     TARGETS = [0, 0]             # Target values for output
     T_MOD = 0.65                 # Variable time-step extinction coefficient
@@ -34,19 +34,25 @@ if __name__ == "__main__":
     BOUNDARY = 1                 # int boundary 1 = random,      2 = reflecting
                                  #              3 = absorbing,   4 = invisible
 
+    # quantum swarm variables
+    BETA = 0.5                  #Float constant controlling influence 
+                                    #between the personal and global best positions
+
+
     best_eval = 1
 
     parent = None            # for the PSO_TEST ONLY
 
-    suppress_output = True   # Suppress the console output of particle swarm
+    suppress_output = False  # Suppress the console output of particle swarm
 
     allow_update = True      # Allow objective call to update state 
 
 
 
     mySwarm = swarm(NO_OF_PARTICLES, LB, UB,
-                    WEIGHTS, VLIM, OUT_VARS, TARGETS,
-                    T_MOD, E_TOL, MAXIT, BOUNDARY, func_F, constr_F)  
+                    WEIGHTS, OUT_VARS, TARGETS,
+                    T_MOD, E_TOL, MAXIT, BOUNDARY, 
+                    func_F, constr_F, BETA, IN_VARS)  
 
     # instantiation of particle swarm optimizer 
     while not mySwarm.complete():

@@ -44,9 +44,15 @@ class TestGraph():
         LB = func_configs.LB              # Lower boundaries, [[0.21, 0, 0.1]]
         UB = func_configs.UB              # Upper boundaries, [[1, 1, 0.5]]   
         WEIGHTS = [[0.7, 1.5, 0.5]]       # Update vector weights
-        VLIM = 0.5                        # Initial velocity limit
         OUT_VARS = func_configs.OUT_VARS  # Number of output variables (y-values)
+        IN_VARS = func_configs.IN_VARS    # Number of input variables (x-values)
         TARGETS = func_configs.TARGETS    # Target values for output
+
+        # quantum swarm variables
+        BETA = 0.5                  #Float constant controlling influence 
+                                        #between the personal and global best positions
+
+
 
         # Swarm setting values
         parent = self                 # Optional parent class for swarm 
@@ -77,8 +83,9 @@ class TestGraph():
 
 
         self.mySwarm = swarm(NO_OF_PARTICLES, LB, UB,
-                        WEIGHTS, VLIM, OUT_VARS, TARGETS,
-                        T_MOD, E_TOL, MAXIT, BOUNDARY, func_F, constr_F, parent, detailedWarnings)  
+                        WEIGHTS, OUT_VARS, TARGETS,
+                        T_MOD, E_TOL, MAXIT, BOUNDARY, func_F, constr_F,
+                        BETA, IN_VARS, parent, detailedWarnings)  
 
 
         # Matplotlib setup

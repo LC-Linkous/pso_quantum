@@ -7,15 +7,10 @@
 #       to include message passing for UI integration, and underflow 
 #       and overflow min/max caps to accomodate wider user input
 #       options in AntennaCAT.
-#       
-#       The self.delta_t variable that was the adaptive timestep has
-#       been left in to make it clear how little code was changed 
-#       between the two repo versions and to retain the export format
-#       
-#        self.delta_t is set constant to 1
+#      
 #
 #
-#   Author(s): Jonathan Lundquist, Lauren Linkous
+#   Author(s): Lauren Linkous, Jonathan Lundquist
 #   Last update: June 17, 2024
 ##--------------------------------------------------------------------\
 
@@ -23,7 +18,6 @@
 import numpy as np
 from numpy.random import Generator, MT19937
 import sys
-import time
 np.seterr(all='raise')
 
 
@@ -36,9 +30,11 @@ class swarm:
     # int boundary 1 = random,      2 = reflecting
     #              3 = absorbing,   4 = invisible
     def __init__(self, NO_OF_PARTICLES, lbound, ubound,
-                 weights, vlimit, output_size, targets,
-                 T_MOD, E_TOL, maxit, boundary, obj_func,
-                 constr_func, parent=None, detailedWarnings=False):  
+                 weights, output_size, targets,
+                 T_MOD, E_TOL, maxit, boundary, 
+                 obj_func, constr_func, 
+                 beta= 0.5,input_size=3,
+                 parent=None, detailedWarnings=False):  
         
         # Optional parent class func call to write out values that trigger constraint issues
         self.parent = parent 
@@ -86,9 +82,6 @@ class swarm:
                                                                      lbound)    
 
 
-            self.V = np.vstack(np.multiply( self.rng.random((np.max([heightl, 
-                                                                     widthl]),1)), 
-                                                                     vlimit))
 
             for i in range(2,int(NO_OF_PARTICLES)+1):
                 
@@ -100,16 +93,12 @@ class swarm:
                                                                                variation) 
                                                                                + lbound)])
 
-                self.V = \
-                    np.hstack([self.V, 
-                               np.vstack(np.multiply( self.rng.random((np.max([heightl, 
-                                                                               widthl]),
-                                                                               1)), 
-                                                                               vlimit))])
             '''
             self.M                      : An array of current particle locations.
-            self.V                      : An array of current particle velocities.
-            self.output_size            : An integer value for the output size of obj func
+            self.V                      : An array of current particle velocities. NOT USED.
+            self.beta                   : Float constant controlling influence between the personal and global best positions
+            self.output_size            : An integer value for the output size of obj func (y-vals)
+            self.input_size             : An integer value for the input size of the obj func (x-vals)
             self.Active                 : An array indicating the activity status of each particle.
             self.Gb                     : Global best position, initialized with a large value.
             self.F_Gb                   : Fitness value corresponding to the global best position.
@@ -134,7 +123,10 @@ class swarm:
             self.InitDeviation          : Initial deviation of particles.
             self.delta_t                : static time modulation. retained for comparison to original repo. and swarm export
             '''
+            self.V = [] # NOT USED in this version. kept for export comparison
+            self.beta = beta
             self.output_size = output_size
+            self.input_size = input_size
             self.Active = np.ones((NO_OF_PARTICLES))                        
             self.Gb = sys.maxsize*np.ones((np.max([heightl, widthl]),1))   
             self.F_Gb = sys.maxsize*np.ones((output_size,1))                
@@ -154,10 +146,10 @@ class swarm:
             self.boundary = boundary                                       
             self.Flist = []                                                 
             self.Fvals = []                                                 
-            self.vlimit = vlimit                                            
+            self.vlimit = None  # NOT USED in this version. kept for export comparison                                            
             self.Mlast = 1*self.ubound                                      
             self.InitDeviation = self.absolute_mean_deviation_of_particles()
-            self.delta_t = 1   # keep for swarm export format                                             
+            self.delta_t = 1    # NOT USED in this version. kept for export comparison
 
             self.error_message_generator("swarm successfully initialized")
             
@@ -176,15 +168,7 @@ class swarm:
                     self.allow_update = 0
             return noError# return is for error reporting purposes only
     
-    def update_velocity(self,particle):
-        for i in range(0,np.shape(self.V)[0]):            
-            self.V[i,particle] = \
-                self.weights[0][0]* self.rng.random()*self.V[i,particle] \
-                    + self.weights[0][1]* self.rng.random() \
-                        * (self.Pb[i,particle]-self.M[i,particle]) \
-                            + self.weights[0][2]* self.rng.random() \
-                                * (self.Gb[i]-self.M[i,particle])
-            
+
     def check_bounds(self, particle):
         update = 0
         for i in range(0,(np.shape(self.M)[0])):
@@ -267,9 +251,19 @@ class swarm:
             self.Pb[:,particle] = self.M[:,particle]
     
     def update_point(self,particle):
-        self.Mlast = 1*self.M[:,particle]
-        self.V[:,particle] = self.floating_point_error_handler("self.V[:,particle] ", self.V[:,particle] )        
-        self.M[:,particle] = self.M[:,particle] + self.delta_t*self.V[:,particle]
+        #updates particle location. in quantum inspired algs, this merges the classical position& velocity update
+        # duplicate locals to stick with eqs. in README
+        self.Mlast = 1*self.M[:,particle]    # save last loc
+        p = self.Pb[:, particle]             # personal best
+        g = np.hstack(self.Gb)               # global best
+        
+        # Mean Best Position
+        mb = self.beta* p + (1 - self.beta) * g
+
+        # Position Update (Update Rule)
+        u = np.random.uniform(size=(1,self.input_size))
+        self.M[:, particle] = mb + self.beta * np.abs(p - g) * np.log(1 / u)
+
 
     def converged(self):
         convergence = np.linalg.norm(self.F_Gb) < self.E_TOL
@@ -290,8 +284,6 @@ class swarm:
                 "-----------------------------\n" + \
                 "Current Particle:\n" + \
                 str(self.current_particle) +"\n" + \
-                "Current Particle Velocity\n" + \
-                str(self.V[:,self.current_particle]) +"\n" + \
                 "Current Particle Location\n" + \
                 str(self.M[:,self.current_particle]) +"\n" + \
                 "Delta T\n" + \
@@ -305,7 +297,6 @@ class swarm:
         if self.allow_update:
             if self.Active[self.current_particle]:
                 self.check_global_local(self.Flist,self.current_particle)
-                self.update_velocity(self.current_particle)
                 self.update_point(self.current_particle)
                 self.handle_bounds(self.current_particle)
             self.current_particle = self.current_particle + 1
