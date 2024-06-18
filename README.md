@@ -4,6 +4,10 @@ A 'quantum' particle swarm optimizer written in Python using quantum inspired me
 
 Now featuring AntennaCAT hooks for GUI integration and user input handling.
 
+This branch of the repository is part of a series of replication studies. It is not intended to be the 'best' implementation, or the most recent update. This method has been chosen to replicate a specific snapshot of literature.
+
+
+
 ## Table of Contents
 * [Particle Swarm Optimization](#particle-swarm-optimization)
 * [Quantum Inspired Optimization](#quantum-inspired-optimization)
