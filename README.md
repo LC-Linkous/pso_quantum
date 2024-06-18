@@ -69,8 +69,9 @@ Where:
 
 * $\beta$ is a parameter controlling the influence between the personal and global best positions.
 
-
-
+<br>
+<br>
+<br>
 
 2) **Position Update**: In QPSO, instead of updating the velocity and then the position, we directly update the position using quantum mechanics-inspired rules. The update rule is:
 
