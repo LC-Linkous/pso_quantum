@@ -82,9 +82,7 @@ mb=\beta\cdot p+(1−\beta) \ cdot g
 2) **Position Update**: In QPSO, instead of updating the velocity and then the position, we directly update the position using quantum mechanics-inspired rules. The update rule is:
 
 ```math
-\begin{cases}
-\x_i(t+1) = mb \pm \beta \cdot \lvert p - g \rvert \cdot \log(1/u_2)
-\end{cases}
+x_i(t+1) = mb \pm \beta \cdot \lvert p - g \rvert \cdot \log(1/u_2)
 ```
 
         Where:
