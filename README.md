@@ -65,9 +65,9 @@ mb=\beta \cdot p+(1−\beta) \cdot g
 
 ```
 
-        Where:
+Where:
 
-        * $\beta$ is a parameter controlling the influence between the personal and global best positions.
+* $\beta$ is a parameter controlling the influence between the personal and global best positions.
 
 
 
@@ -78,16 +78,16 @@ mb=\beta \cdot p+(1−\beta) \cdot g
 x_i(t+1) = mb \pm \beta \cdot \lvert p - g \rvert \cdot \log(1/u)
 ```
 
-        Where:
+Where:
 
-        * $mb$ is the mean best position
-        * $\beta$ is a user-defined parameter influencing convergence behavior.
-        * $p$ is the personal best position of the particle.
-        * $g$ is the global best position of the swarm.
-        * $u$ is a uniformly distributed random number in the range (0, 1).
-        * The logarithmic term $log(1/u)$ comes from the distribution properties of quantum systems.
-        * $\beta \cdot \lvert p−g \rvert $ scales the exploration step based on the distance between the personal and global best positions.
-        * $log(1/u)$ introduces a random factor with a bias towards smaller values (since $u$ is between 0 and 1, $log(1/u)$ is negative, making $−log⁡(1/u)$ positive).
+* $mb$ is the mean best position
+* $\beta$ is a user-defined parameter influencing convergence behavior.
+* $p$ is the personal best position of the particle.
+* $g$ is the global best position of the swarm.
+* $u$ is a uniformly distributed random number in the range (0, 1).
+* The logarithmic term $log(1/u)$ comes from the distribution properties of quantum systems.
+* $\beta \cdot \lvert p−g \rvert $ scales the exploration step based on the distance between the personal and global best positions.
+* $log(1/u)$ introduces a random factor with a bias towards smaller values (since $u$ is between 0 and 1, $log(1/u)$ is negative, making $−log⁡(1/u)$ positive).
 
 
 The QPSO update rule is based on the quantum mechanics principle where particles have a probability distribution of being in different positions. The position update rule can be seen as a way to explore the search space more effectively through 2 key factors:
