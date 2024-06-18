@@ -76,7 +76,7 @@ class TestDetails():
 
 
         self.mySwarm = swarm(NO_OF_PARTICLES, LB, UB,
-                        WEIGHTS, VLIM, OUT_VARS, TARGETS,
+                        WEIGHTS, OUT_VARS, TARGETS,
                         T_MOD, E_TOL, MAXIT, BOUNDARY, func_F, constr_F, 
                         BETA, IN_VARS, parent, detailedWarnings)  
 
