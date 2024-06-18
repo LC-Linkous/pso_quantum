@@ -37,7 +37,7 @@ PSO consists of a population (or swarm) of candidate solutions called particles.
 
 ## Quantum Inspired Optimization
 
-Quantum-inspired algorithms take concepts from quantum mechanics, such as superposition and entanglement, and apply them in classical computation to solve optimization problems more effectively (depending on the problem type). Quantum Particle Swarm Optimization was introduced in 2004 [2] [3]. Paraphrased from [2], in PSO the location and velocity vectors are used to determine the trajectory of the particle, which because in Newtonian mechannics a particle moves along a determind trajectory. However, in quantum mechanics, the location and velocity vectors cannot be determined/known simultaneously due to uncertainty principle (Werner Heisenberg, 1927). 
+Quantum Particle Swarm Optimization (QPSO) was introduced in 2004 [2] [3]. Paraphrased from [2], in PSO the location and velocity vectors are used to determine the trajectory of the particle, which because in Newtonian mechannics a particle moves along a determind trajectory. However, in quantum mechanics, the location and velocity vectors cannot be determined/known simultaneously due to uncertainty principle (Werner Heisenberg, 1927). The take away being, quantum-inspired algorithms take concepts from quantum mechanics, such as superposition and entanglement, and apply them in classical computation to solve optimization problems more effectively (depending on the problem type). These two concepts are applied, generally speaking, as follows:
 
 
 1) Superposition
@@ -68,35 +68,35 @@ Unlike traditional PSO, Quantum Particle Swarm Optimization (QPSO) doesn't use a
 1) **Mean Best Position (mb)**: This is a weighted average of the personal best position ($p$) and the global best position ($g$). It is calculated as:
 
 ```math
-\text{minimize}: 
-\begin{cases}
-mb=\beta*p+(1−\beta)*g
-\end{cases}
+mb=\beta\cdot p+(1−\beta) \ cdot g
 ```
 
-Where:
+        Where:
 
-* $\beta$ is a parameter controlling the influence between the personal and global best positions.
+        * $\beta$ is a parameter controlling the influence between the personal and global best positions.
+
+
+
 
 
 2) **Position Update**: In QPSO, instead of updating the velocity and then the position, we directly update the position using quantum mechanics-inspired rules. The update rule is:
 
 ```math
-\text{minimize}: 
 \begin{cases}
-\[ \x_i(t+1) = mb \pm \beta \cdot |\lvert p - g \rvert| \cdot \log(1/u_2) \]
+\x_i(t+1) = mb \pm \beta \cdot \lvert p - g \rvert \cdot \log(1/u_2)
 \end{cases}
 ```
 
-Where:
+        Where:
 
-* $\beta$ is a user-defined parameter influencing the convergence behavior.
-* $p$ is the personal best position of the particle.
-* $g$ is the global best position of the swarm.
-* $u^2$​ is a uniformly distributed random number in the range (0, 1).
-* The logarithmic term $log(1/u_2​)$ comes from the distribution properties of quantum systems.
-* $\bet \cdot ∣p−g∣ $ scales the exploration step based on the distance between the personal and global best positions.
-* $log(1/u_2​)$ introduces a random factor with a bias towards smaller values (since $u_2$​ is between 0 and 1, $log(1/u_2​)$ is negative, making $−log⁡(1/u_2)$ positive).
+        * $mb$ is the mean best position
+        * $\beta$ is a user-defined parameter influencing the convergence behavior.
+        * $p$ is the personal best position of the particle.
+        * $g$ is the global best position of the swarm.
+        * $u_2$​ is a uniformly distributed random number in the range (0, 1).
+        * The logarithmic term $log(1/u_2​)$ comes from the distribution properties of quantum systems.
+        * $\beta \cdot \lvert p−g \rvert $ scales the exploration step based on the distance between the personal and global best positions.
+        * $log(1/u_2​)$ introduces a random factor with a bias towards smaller values (since $u_2$​ is between 0 and 1, $log(1/u_2​)$ is negative, making $−log⁡(1/u_2)$ positive).
 
 
 
@@ -206,9 +206,6 @@ NOTE: if you close the graph as the code is running, the code will continue to r
 
 [3] Jun Sun, Wenbo Xu and Bin Feng, "A global search strategy of quantum-behaved particle swarm optimization," IEEE Conference on Cybernetics and Intelligent Systems, 2004., Singapore, 2004, pp. 111-116 vol.1, doi: 10.1109/ICCIS.2004.1460396.
 
-[4] Tutorial reference
-
-[5] Tutorial reference - how matrix math hadamard works
 
 
 ## Publications and Integration
