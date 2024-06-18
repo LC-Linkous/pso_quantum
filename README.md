@@ -1,8 +1,6 @@
 # pso_quantum
 
-# IN PROGRESS !!
-
-A 'quantum' particle swarm optimizer written in Python using several quantum inspired methods. Modified from the [adaptive timestep PSO optimizer](https://github.com/jonathan46000/pso_python) by [jonathan46000](https://github.com/jonathan46000). 
+A 'quantum' particle swarm optimizer written in Python using quantum inspired methods (non-qiskit version). Modified from the [adaptive timestep PSO optimizer](https://github.com/jonathan46000/pso_python) by [jonathan46000](https://github.com/jonathan46000). 
 
 Now featuring AntennaCAT hooks for GUI integration and user input handling.
 
