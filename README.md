@@ -26,7 +26,6 @@ Now featuring AntennaCAT hooks for GUI integration and user input handling.
 * [Publications and Integration](#publications-and-integration)
 * [Licensing](#licensing)  
 
-
 ## Particle Swarm Optimization
 
 Particle Swarm Optimization (PSO) is a popular nature-inspired optimization algorithm introduced in "Particle Swarm Optimization" [1] (J. Kennedy & R. Eberhart, 1995). It is inspired by the social behavior animal groups, often compared to birds flocking or fish schooling. PSO is used to find approximate solutions to complex optimization problems.
@@ -34,11 +33,9 @@ Particle Swarm Optimization (PSO) is a popular nature-inspired optimization algo
 PSO consists of a population (or swarm) of candidate solutions called particles. Each particle moves through the search space, influenced by its own best-known position and the best-known positions of the swarm. The algorithm combines exploration and exploitation to find the optimal solution.
 
 
-
 ## Quantum Inspired Optimization
 
-Quantum Particle Swarm Optimization (QPSO) was introduced in 2004 [2] [3]. Paraphrased from [2], in PSO the location and velocity vectors are used to determine the trajectory of the particle, which because in Newtonian mechannics a particle moves along a determind trajectory. However, in quantum mechanics, the location and velocity vectors cannot be determined/known simultaneously due to uncertainty principle (Werner Heisenberg, 1927). The take away being, quantum-inspired algorithms take concepts from quantum mechanics, such as superposition and entanglement, and apply them in classical computation to solve optimization problems more effectively (depending on the problem type). These two concepts are applied, generally speaking, as follows:
-
+Quantum Particle Swarm Optimization (QPSO) was introduced in 2004 [2] [3]. Paraphrased from [2], in PSO the location and velocity vectors are used to determine the trajectory of the particle, which because in Newtonian mechanics a particle moves along a determined trajectory. However, in quantum mechanics, the location and velocity vectors cannot be determined/known simultaneously due to uncertainty principle (Werner Heisenberg, 1927). The takeaway being, quantum-inspired algorithms take concepts from quantum mechanics, such as superposition and entanglement, and apply them in classical computation to solve optimization problems more effectively (depending on the problem type). These two concepts are applied, generally speaking, as follows:
 
 1) Superposition
 
@@ -57,25 +54,22 @@ Quantum Particle Swarm Optimization (QPSO) was introduced in 2004 [2] [3]. Parap
 **Example in QPSO**: In QPSO, the positions of particles might be updated using a combination of their personal best position and the global best position, creating a form of "entanglement" where particles are influenced by the best solutions found by the swarm, thus maintaining a level of coordination and cooperation.
 
 
-
 ## Quantum Particle Swarm Optimization
 
-Unlike traditional PSO, Quantum Particle Swarm Optimization (QPSO) doesn't use a velocity vector. Instead, it updates particle positions directly based on a probability distribution  based on the mean best position and a logarithmic factor, which has roots in the quantum mechanics principles mentioned previously. The QPSO update rule leverages quantum-inspired probabilistic movements to balance exploration and exploitation. By combining the best aspects of personal and global experiences and adding a stochastic component, QPSO can effectively search complex optimization landscapes. 
-
+Unlike traditional PSO, Quantum Particle Swarm Optimization (QPSO) doesn't use a velocity vector. Instead, it updates particle positions directly based on a probability distribution based on the mean best position and a logarithmic factor, which has roots in the quantum mechanics principles mentioned previously. The QPSO update rule leverages quantum-inspired probabilistic movements to balance exploration and exploitation. By combining the best aspects of personal and global experiences and adding a stochastic component, QPSO can effectively search complex optimization landscapes. 
 
  The key steps in QPSO include:
 
 1) **Mean Best Position (mb)**: This is a weighted average of the personal best position ($p$) and the global best position ($g$). It is calculated as:
 
 ```math
-mb=\beta \cdot p+(1−\beta) \ cdot g
+mb=\beta \cdot p+(1−\beta) \cdot g
 
 ```
 
         Where:
 
         * $\beta$ is a parameter controlling the influence between the personal and global best positions.
-
 
 
 
@@ -89,14 +83,13 @@ x_i(t+1) = mb \pm \beta \cdot \lvert p - g \rvert \cdot \log(1/u)
         Where:
 
         * $mb$ is the mean best position
-        * $\beta$ is a user-defined parameter influencing the convergence behavior.
+        * $\beta$ is a user-defined parameter influencing convergence behavior.
         * $p$ is the personal best position of the particle.
         * $g$ is the global best position of the swarm.
-        * $u$​ is a uniformly distributed random number in the range (0, 1).
-        * The logarithmic term $log(1/u​)$ comes from the distribution properties of quantum systems.
+        * $u$ is a uniformly distributed random number in the range (0, 1).
+        * The logarithmic term $log(1/u)$ comes from the distribution properties of quantum systems.
         * $\beta \cdot \lvert p−g \rvert $ scales the exploration step based on the distance between the personal and global best positions.
-        * $log(1/u​)$ introduces a random factor with a bias towards smaller values (since $u$​ is between 0 and 1, $log(1/u)$ is negative, making $−log⁡(1/u)$ positive).
-
+        * $log(1/u)$ introduces a random factor with a bias towards smaller values (since $u$ is between 0 and 1, $log(1/u)$ is negative, making $−log⁡(1/u)$ positive).
 
 
 The QPSO update rule is based on the quantum mechanics principle where particles have a probability distribution of being in different positions. The position update rule can be seen as a way to explore the search space more effectively through 2 key factors:
@@ -104,7 +97,6 @@ The QPSO update rule is based on the quantum mechanics principle where particles
 **Diverse Exploration**: The term $log⁡(1/u_2)$ helps in creating a wide range of possible moves, allowing the particles to explore the search space extensively. The logarithmic function is chosen because it provides a heavy-tailed distribution, meaning particles can make both small and large jumps, avoiding local minima and encouraging global exploration.
 
 **Balanced Exploitation**: The combination of $mb$, $p$, and $g$ ensures that the particles are guided towards promising regions of the search space, leveraging both individual experience (personal_best) and collective knowledge (global_best).
-
 
 
 ## Requirements
@@ -133,7 +125,7 @@ zipp==3.18.1
 ## Implementation
 
 ### Constraint Handling
-Users must create their own constraint function for their problems, if there are constraints beyond the problem bounds.  This is then passed into the constructor. If the default constraint function is used, it always returns true (which means there are no constraints).
+Users must create their own constraint function for their problems, if there are constraints beyond the problem bounds.  This is then passed to the constructor. If the default constraint function is used, it always returns true (which means there are no constraints).
 
 ### Boundary Types
 This PSO optimizer has 4 different types of bounds, Random (Particles that leave the area respawn), Reflection (Particles that hit the bounds reflect), Absorb (Particles that hit the bounds lose velocity in that direction), Invisible (Out of bound particles are no longer evaluated).
@@ -190,7 +182,7 @@ main_test_details.py provides an example using a parent class, and the self.supp
 ### Realtime Graph
 
 <p align="center">
-        <img src="https://github.com/LC-Linkous/pso_python/blob/pso_quantum/media/pso_graph.gif" alt="Example QPSO Convergence" height="200">
+        <img src="https://github.com/LC-Linkous/pso_python/blob/pso_quantum/media/qpso_graph.gif" alt="Example QPSO Convergence" height="200">
 </p>
 
 main_test_graph.py provides an example using a parent class, and the self.suppress_output and detailedWarnings flags to control error messages that are passed back to the parent class to be printed with a timestamp. Additionally, a realtime graph shows particle locations at every step.
@@ -206,7 +198,6 @@ NOTE: if you close the graph as the code is running, the code will continue to r
 [3] Jun Sun, Wenbo Xu and Bin Feng, "A global search strategy of quantum-behaved particle swarm optimization," IEEE Conference on Cybernetics and Intelligent Systems, 2004., Singapore, 2004, pp. 111-116 vol.1, doi: 10.1109/ICCIS.2004.1460396.
 
 
-
 ## Publications and Integration
 This software works as a stand-alone implementation, and as one of the optimizers integrated into AntennaCAT.
 
@@ -215,5 +206,4 @@ Publications featuring the code in this repo will be added as they become public
 ## Licensing
 
 The code in this repository has been released under GPL-2.0
-
 
