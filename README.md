@@ -68,7 +68,8 @@ Unlike traditional PSO, Quantum Particle Swarm Optimization (QPSO) doesn't use a
 1) **Mean Best Position (mb)**: This is a weighted average of the personal best position ($p$) and the global best position ($g$). It is calculated as:
 
 ```math
-mb=\beta\cdot p+(1−\beta) \ cdot g
+mb=\beta \cdot p+(1−\beta) \ cdot g
+
 ```
 
         Where:
@@ -82,7 +83,7 @@ mb=\beta\cdot p+(1−\beta) \ cdot g
 2) **Position Update**: In QPSO, instead of updating the velocity and then the position, we directly update the position using quantum mechanics-inspired rules. The update rule is:
 
 ```math
-x_i(t+1) = mb \pm \beta \cdot \lvert p - g \rvert \cdot \log(1/u_2)
+x_i(t+1) = mb \pm \beta \cdot \lvert p - g \rvert \cdot \log(1/u)
 ```
 
         Where:
@@ -91,10 +92,10 @@ x_i(t+1) = mb \pm \beta \cdot \lvert p - g \rvert \cdot \log(1/u_2)
         * $\beta$ is a user-defined parameter influencing the convergence behavior.
         * $p$ is the personal best position of the particle.
         * $g$ is the global best position of the swarm.
-        * $u_2$​ is a uniformly distributed random number in the range (0, 1).
-        * The logarithmic term $log(1/u_2​)$ comes from the distribution properties of quantum systems.
+        * $u$​ is a uniformly distributed random number in the range (0, 1).
+        * The logarithmic term $log(1/u​)$ comes from the distribution properties of quantum systems.
         * $\beta \cdot \lvert p−g \rvert $ scales the exploration step based on the distance between the personal and global best positions.
-        * $log(1/u_2​)$ introduces a random factor with a bias towards smaller values (since $u_2$​ is between 0 and 1, $log(1/u_2​)$ is negative, making $−log⁡(1/u_2)$ positive).
+        * $log(1/u​)$ introduces a random factor with a bias towards smaller values (since $u$​ is between 0 and 1, $log(1/u)$ is negative, making $−log⁡(1/u)$ positive).
 
 
 
@@ -148,11 +149,11 @@ The optimizer minimizes the absolute value of the difference from the target out
 #### Internal Objective Function Example
 The current internal optimization function takes 3 inputs, and has 2 outputs. It was created as a simple 3-variable optimization objective function that would be quick to converge.  
 <p align="center">
-        <img src="https://github.com/LC-Linkous/pso_python/blob/pso_basic/media/obj_func_pareto.png" alt="Function Feasible Decision Space and Objective Space with Pareto Front" height="200">
+        <img src="https://github.com/LC-Linkous/pso_python/blob/pso_quantum/media/obj_func_pareto.png" alt="Function Feasible Decision Space and Objective Space with Pareto Front" height="200">
 </p>
    <p align="center">Function Feasible Decision Space and Objective Space with Pareto Front</p>
 
-```math
+```math   
 \text{minimize}: 
 \begin{cases}
 f_{1}(\mathbf{x}) = (x_1-0.5)^2 + (x_2-0.1)^2 \\
@@ -189,7 +190,7 @@ main_test_details.py provides an example using a parent class, and the self.supp
 ### Realtime Graph
 
 <p align="center">
-        <img src="https://github.com/LC-Linkous/pso_python/blob/main/media/pso_graph.gif" alt="Example PSO Convergence" height="200">
+        <img src="https://github.com/LC-Linkous/pso_python/blob/pso_quantum/media/pso_graph.gif" alt="Example QPSO Convergence" height="200">
 </p>
 
 main_test_graph.py provides an example using a parent class, and the self.suppress_output and detailedWarnings flags to control error messages that are passed back to the parent class to be printed with a timestamp. Additionally, a realtime graph shows particle locations at every step.
