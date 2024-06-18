@@ -8,6 +8,8 @@ Now featuring AntennaCAT hooks for GUI integration and user input handling.
 * [Particle Swarm Optimization](#particle-swarm-optimization)
 * [Quantum Inspired Optimization](#quantum-inspired-optimization)
 * [Quantum Particle Swarm Optimization](#quantum-particle-swarm-optimization)
+    * [Mean Best Position](#mean-best-position)
+    * [Position Update](#position-update)
 * [Requirements](#requirements)
 * [Implementation](#implementation)
     * [Constraint Handling](#constraint-handling)
@@ -58,7 +60,9 @@ Unlike traditional PSO, Quantum Particle Swarm Optimization (QPSO) doesn't use a
 
  The key steps in QPSO include:
 
-1) **Mean Best Position (mb)**: This is a weighted average of the personal best position ($p$) and the global best position ($g$). It is calculated as:
+### Mean Best Position
+ 
+Mean Best Position ($mb$) is a weighted average of the personal best position ($p$) and the global best position ($g$). It is calculated as:
 
 ```math
 mb=\beta \cdot p+(1−\beta) \cdot g
@@ -69,11 +73,9 @@ Where:
 
 * $\beta$ is a parameter controlling the influence between the personal and global best positions.
 
-<br>
-<br>
-<br>
+### Position Update
 
-2) **Position Update**: In QPSO, instead of updating the velocity and then the position, we directly update the position using quantum mechanics-inspired rules. The update rule is:
+ In QPSO, instead of updating the velocity and then the position, we directly update the position using quantum mechanics-inspired rules. The update rule is:
 
 ```math
 x_i(t+1) = mb \pm \beta \cdot \lvert p - g \rvert \cdot \log(1/u)
