@@ -253,7 +253,7 @@ class swarm:
         mb = self.beta* p + (1 - self.beta) * g
 
         # Position Update (Update Rule)
-        u = np.random.uniform(size=(1,self.input_size))
+        u = self.rng.uniform(size=(1,self.input_size))
         self.M[:, particle] = mb + self.beta * np.abs(p - g) * np.log(1 / u)
 
 
