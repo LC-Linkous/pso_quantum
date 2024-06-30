@@ -159,7 +159,7 @@ Each function has four files in a directory:
 Other multi-objective functions can be applied to this project by following the same format (and several have been collected into a compatible library, and will be released in a separate repo)
 
 <p align="center">
-        <img src="https://github.com/LC-Linkous/pso_python/blob/pso_basic/media/himmelblau_plots.png" alt="Himmelblau function" height="250">
+        <img src="https://github.com/LC-Linkous/pso_python/blob/pso_quantum/media/himmelblau_plots.png" alt="Himmelblau function" height="250">
 </p>
    <p align="center">Plotted Himmelblau Function with 3D Plot on the Left, and a 2D Contour on the Right</p>
 
@@ -177,7 +177,7 @@ f(x, y) = (x^2 + y - 11)^2 + (x + y^2 - 7)^2
 
 
 <p align="center">
-        <img src="https://github.com/LC-Linkous/pso_python/blob/pso_basic/media/obj_func_pareto.png" alt="Function Feasible Decision Space and Objective Space with Pareto Front" height="200">
+        <img src="https://github.com/LC-Linkous/pso_python/blob/pso_quantum/media/obj_func_pareto.png" alt="Function Feasible Decision Space and Objective Space with Pareto Front" height="200">
 </p>
    <p align="center">Plotted Multi-Objective Function Feasible Decision Space and Objective Space with Pareto Front</p>
 
@@ -195,7 +195,7 @@ f_{2}(\mathbf{x}) = (x_3-0.2)^4
 
 
 <p align="center">
-        <img src="https://github.com/LC-Linkous/pso_python/blob/pso_basic/media/1D_test_plots.png" alt="Function Feasible Decision Space and Objective Space with Pareto Front" height="200">
+        <img src="https://github.com/LC-Linkous/pso_python/blob/pso_quantum/media/1D_test_plots.png" alt="Function Feasible Decision Space and Objective Space with Pareto Front" height="200">
 </p>
    <p align="center">Plotted Single Input, Single-objective Function Feasible Decision Space and Objective Space with Pareto Front</p>
 
