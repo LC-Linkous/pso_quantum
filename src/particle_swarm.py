@@ -11,7 +11,7 @@
 #
 #
 #   Author(s): Lauren Linkous, Jonathan Lundquist
-#   Last update: June 17, 2024
+#   Last update: June 29, 2024
 ##--------------------------------------------------------------------\
 
 
@@ -201,8 +201,6 @@ class swarm:
         constr = self.constr_func(self.M[particle])
         if (update > 0) and constr:
             self.M[particle] = 1*self.Mlast
-            NewV = np.multiply(-1,self.V[update-1,particle])
-            self.V[update-1,particle] = NewV
         if not constr:
             self.random_bound(particle)
 
@@ -211,7 +209,6 @@ class swarm:
         constr = self.constr_func(self.M[particle])
         if (update > 0) and constr:
             self.M[particle] = 1*self.Mlast
-            self.V[particle,update-1] = 0
         if not constr:
             self.random_bound(particle)
 
