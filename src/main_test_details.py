@@ -10,7 +10,7 @@
 #       for integration in the AntennaCAT GUI.
 #
 #   Author(s): Lauren Linkous, Jonathan Lundquist
-#   Last update: June 17, 2024
+#   Last update: August 18, 2024
 ##--------------------------------------------------------------------\
 
 
@@ -30,15 +30,12 @@ class TestDetails():
     def __init__(self):
         # Constant variables
         NO_OF_PARTICLES = 50         # Number of particles in swarm
-        T_MOD = 0.65                 # Variable time-step extinction coefficient
         E_TOL = 10 ** -6             # Convergence Tolerance
         MAXIT = 5000                 # Maximum allowed iterations
         BOUNDARY = 1                 # int boundary 1 = random,      2 = reflecting
                                      #              3 = absorbing,   4 = invisible
 
         WEIGHTS = [[0.7, 1.5, 0.5]]       # Update vector weights
-        VLIM = 0.5                        # Initial velocity limit
-
 
         
         # Objective function dependent variables
@@ -56,16 +53,6 @@ class TestDetails():
         # quantum swarm variables
         BETA = 0.5                  #Float constant controlling influence 
                                         #between the personal and global best positions
-
-
-
-        # Swarm setting values
-        parent = self                 # Optional parent class for swarm 
-                                        # (Used for passing debug messages or
-                                        # other information that will appear 
-                                        # in GUI panels)
-
-        detailedWarnings = False      # Optional boolean for detailed feedback
 
 
         # Swarm vars
@@ -89,7 +76,7 @@ class TestDetails():
 
         self.mySwarm = swarm(NO_OF_PARTICLES, LB, UB,
                         WEIGHTS, OUT_VARS, TARGETS,
-                        T_MOD, E_TOL, MAXIT, BOUNDARY, func_F, constr_F, 
+                        E_TOL, MAXIT, BOUNDARY, func_F, constr_F, 
                         BETA, IN_VARS, parent, detailedWarnings)  
 
 

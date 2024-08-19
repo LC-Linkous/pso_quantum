@@ -5,33 +5,33 @@
 #   './pso_quantum/src/particle_swarm.py'
 #   'quantum' particle swarm class. This class has been modified from the original
 #       to include message passing for UI integration, and underflow 
-#       and overflow min/max caps to accomodate wider user input
+#       and overflow min/max caps to accommodate wider user input
 #       options in AntennaCAT.
 #      
 #
 #
 #   Author(s): Lauren Linkous, Jonathan Lundquist
-#   Last update: June 29, 2024
+#   Last update: August 18, 2024
 ##--------------------------------------------------------------------\
-
 
 import numpy as np
 from numpy.random import Generator, MT19937
 import sys
 np.seterr(all='raise')
 
-
 class swarm:
     # arguments should take form: 
-    # swarm(int, [[float, float, ...]], 
-    # [[float, float, ...]], [[float, ...]], 
-    # float, int, [[float, ...]], float, 
-    # float, int, int, func) 
+    # swarm(int, [[float, float, ...]], [[float, float, ...]], 
+    #  [[float, ...]],  int, [[float, ...]],  
+    #  float, int, int, 
+    #  func, func,
+    #  float, int,
+    #  class obj, bool) 
     # int boundary 1 = random,      2 = reflecting
     #              3 = absorbing,   4 = invisible
     def __init__(self, NO_OF_PARTICLES, lbound, ubound,
                  weights, output_size, targets,
-                 T_MOD, E_TOL, maxit, boundary, 
+                 E_TOL, maxit, boundary, 
                  obj_func, constr_func, 
                  beta= 0.5,input_size=3,
                  parent=None, detailedWarnings=False):  
@@ -77,10 +77,8 @@ class swarm:
             variation = ubound-lbound
 
 
-
             self.M = np.array(np.multiply(self.rng.random((1,np.max([heightl, widthl]))), 
                                                                 variation)+lbound)    
-
 
             for i in range(2,int(NO_OF_PARTICLES)+1):
                 
@@ -89,7 +87,6 @@ class swarm:
                                np.multiply( self.rng.random((1,np.max([heightl, widthl]))), 
                                                                                variation) 
                                                                                + lbound])
-
 
             '''
             self.M                      : An array of current particle locations.
@@ -103,7 +100,6 @@ class swarm:
             self.F_Pb                   : Fitness value corresponding to the personal best position for each particle.
             self.weights                : Weights for the optimization process.
             self.targets                : Target values for the optimization process.
-            self.T_MOD                  : Time modulation parameter            
             self.maxit                  : Maximum number of iterations.
             self.E_TOL                  : Error tolerance.
             self.obj_func               : Objective function to be optimized.      
@@ -116,7 +112,6 @@ class swarm:
             self.Flist                  : List to store fitness values.
             self.Fvals                  : List to store fitness values.
             self.Mlast                  : Last location of particle
-            self.InitDeviation          : Initial deviation of particles.
             '''
             self.beta = beta
             self.output_size = output_size
@@ -128,7 +123,6 @@ class swarm:
             self.F_Pb = sys.maxsize*np.ones((NO_OF_PARTICLES,output_size))  
             self.weights = np.array(weights)                     
             self.targets = np.array(targets)                 
-            self.T_MOD = T_MOD                                                        
             self.maxit = maxit                                             
             self.E_TOL = E_TOL                                              
             self.obj_func = obj_func                                             
@@ -141,8 +135,6 @@ class swarm:
             self.Flist = []                                                 
             self.Fvals = []          
             self.Mlast = 1*self.ubound                                      
-            self.InitDeviation = self.absolute_mean_deviation_of_particles()
-
 
             self.error_message_generator("swarm successfully initialized")
             
@@ -170,26 +162,14 @@ class swarm:
                 update = i+1        
         return update
 
-
-    def validate_obj_function(self, particle):
-        # checks the the objective function resolves with the current particle.
-        # It is possible (and likely) that obj funcs without proper error handling
-        # will throw over/underflow errors.
-        # e.g.: numpy does not support float128()
-        newFVals, noError = self.obj_func(particle, self.output_size)
-        if noError == False:
-            #print("!!!!")
-            pass
-        return noError
-
     def random_bound(self, particle):
         # If particle is out of bounds, bring the particle back in bounds
         # The first condition checks if constraints are met, 
-        # and the second determins if the values are to large (positive or negitive)
+        # and the second determines if the values are too large (positive or negative)
         # and may cause a buffer overflow with large exponents (a bug that was found experimentally)
-        update = self.check_bounds(particle) or not self.constr_func(self.M[particle]) or not self.validate_obj_function(np.hstack(self.M[self.current_particle]))
+        update = self.check_bounds(particle) or not self.constr_func(self.M[particle]) 
         if update > 0:
-            while(self.check_bounds(particle)>0) or (self.constr_func(self.M[particle])==False) or (self.validate_obj_function(self.M[particle])==False): 
+            while(self.check_bounds(particle)>0) or (self.constr_func(self.M[particle])==False): 
                 variation = self.ubound-self.lbound
                 self.M[particle] = \
                     np.squeeze(self.rng.random() * 
@@ -213,7 +193,7 @@ class swarm:
             self.random_bound(particle)
 
     def invisible_bound(self, particle):
-        update = self.check_bounds(particle) or not self.constr_func(self.M[particle]) or not self.validate_obj_function(self.M[particle])
+        update = self.check_bounds(particle) or not self.constr_func(self.M[particle])
         if update > 0:
             self.Active[particle] = 0  
         else:
@@ -254,7 +234,6 @@ class swarm:
         # Position Update (Update Rule)
         u = self.rng.uniform(size=(1,self.input_size))
         self.M[particle] = mb + self.beta * np.abs(p - g) * np.log(1 / u)
-
 
     def converged(self):
         convergence = np.linalg.norm(self.F_Gb) < self.E_TOL
@@ -299,7 +278,6 @@ class swarm:
                 self.error_message_generator(msg)
 
 
-
     def export_swarm(self):
         swarm_export = {'lbound': self.lbound,
                         'ubound': self.ubound,
@@ -310,7 +288,6 @@ class swarm:
                         'F_Pb': self.F_Pb,
                         'weights': self.weights,
                         'targets': self.targets,
-                        'T_MOD': self.T_MOD,
                         'maxit': self.maxit,
                         'E_TOL': self.E_TOL,
                         'iter': self.iter,
@@ -335,7 +312,6 @@ class swarm:
         self.F_Pb = swarm_export['F_Pb'] 
         self.weights = swarm_export['weights'] 
         self.targets = swarm_export['targets'] 
-        self.T_MOD = swarm_export['T_MOD'] 
         self.maxit = swarm_export['maxit'] 
         self.E_TOL = swarm_export['E_TOL'] 
         self.iter = swarm_export['iter'] 
@@ -372,60 +348,10 @@ class swarm:
         abs_mean_dev = np.linalg.norm(np.mean(abs_data,axis=0))
         return abs_mean_dev
 
-
-    def floating_point_error_handler(self, varName, varValue):
-        # function added to handle floating point errors caused by user input variations
-        # buffer overflows happen when t_mod, vlim, and the weights are all high
-        # buffer underflows happen when t_mod, vlim, and the weights are all low
-        # other combinations may cause either issue, but these have been found experimentally
-
-        # constr_buffer.py or constr_F.py may be more strict depending on the function
-        # this is the limit for the optimizer, not the objective function.
-
-        # this function applies a max or min cap to the passed variable
-        capValue = varValue 
-
-        if type(varValue) == np.ndarray:
-            for idx in range(0, len(varValue)): 
-                if varValue[idx] == 0:
-                    pass
-                elif abs(varValue[idx]) > 1e100:
-                    varValue[idx] = 1e100*np.sign(varValue[idx])
-                    if self.detailedWarnings == True:
-                        msg = ("WARNING: " + str(varName) + " item " + str(idx) + "  is " + str(varValue[idx]) + ". using max exp cap")
-                        self.error_message_generator(msg)
-                        msg = ("WARNING: your ants are at risk of leaving the farm")  
-                        self.error_message_generator(msg)
-
-                elif abs(varValue[idx]) < 1e-100:
-                    varValue[idx]=1e-100*np.sign(varValue[idx])
-                    if self.detailedWarnings == True:
-                        msg = ("WARNING: " + str(varName) + " item " + str(idx) + "  is " + str(varValue[idx]) + ". using min exp cap")
-                        self.error_message_generator(msg)
-                        msg = ("WARNING: your ants are at risk of leaving the farm")  
-                        self.error_message_generator(msg)
-        else:
-            if varValue == 0:
-                pass
-            elif abs(varValue) > 1e100:
-                capValue = 1e100*np.sign(varValue)
-                if self.detailedWarnings == True:
-                    msg = ("WARNING: " + str(varName) + " is " + str(varValue) + ". using max exp cap")
-                    self.error_message_generator(msg)
-                    msg = ("WARNING: your ants are at risk of leaving the farm")  
-                    self.error_message_generator(msg)
-            elif abs(varValue) < 1e-100:
-                capValue = 1e-100*np.sign(varValue)
-                if self.detailedWarnings == True:
-                    msg = ("WARNING: " + str(varName) + " is " + str(varValue) + ". using min exp cap")
-                    self.error_message_generator(msg)
-                    msg = ("WARNING: your ants are at risk of leaving the farm")  
-                    self.error_message_generator(msg)  
-
-        return capValue
-
     def error_message_generator(self, msg):
         if self.parent == None:
             print(msg)
         else:
             self.parent.debug_message_printout(msg)
+
+

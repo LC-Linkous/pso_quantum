@@ -12,7 +12,7 @@
 #       matplotlib plot of particle location
 #
 #   Author(s): Lauren Linkous, Jonathan Lundquist
-#   Last update: June 17, 2024
+#   Last update: August 18, 2024
 ##--------------------------------------------------------------------\
 
 
@@ -35,16 +35,12 @@ class TestGraph():
 
         # Constant variables
         NO_OF_PARTICLES = 50         # Number of particles in swarm
-        T_MOD = 0.65                 # Variable time-step extinction coefficient
         E_TOL = 10 ** -6             # Convergence Tolerance
         MAXIT = 5000                 # Maximum allowed iterations
         BOUNDARY = 1                 # int boundary 1 = random,      2 = reflecting
                                      #              3 = absorbing,   4 = invisible
 
         WEIGHTS = [[0.7, 1.5, 0.5]]       # Update vector weights
-        VLIM = 0.5                        # Initial velocity limit
-
-
         
         # Objective function dependent variables
         LB = func_configs.LB                    # Lower boundaries, [[0.21, 0, 0.1]]
@@ -61,17 +57,6 @@ class TestGraph():
         # quantum swarm variables
         BETA = 0.5                  #Float constant controlling influence 
                                         #between the personal and global best positions
-
-
-
-        # Swarm setting values
-        parent = self                 # Optional parent class for swarm 
-                                        # (Used for passing debug messages or
-                                        # other information that will appear 
-                                        # in GUI panels)
-
-        detailedWarnings = False      # Optional boolean for detailed feedback
-
 
         # Swarm vars
         self.best_eval = 1            # Starting eval value
@@ -94,7 +79,7 @@ class TestGraph():
 
         self.mySwarm = swarm(NO_OF_PARTICLES, LB, UB,
                         WEIGHTS, OUT_VARS, TARGETS,
-                        T_MOD, E_TOL, MAXIT, BOUNDARY, func_F, constr_F,
+                        E_TOL, MAXIT, BOUNDARY, func_F, constr_F,
                         BETA, IN_VARS, parent, detailedWarnings)  
 
 
@@ -104,16 +89,16 @@ class TestGraph():
         # position
         self.ax1 = self.fig.add_subplot(121, projection='3d')
         self.ax1.set_title("Particle Location, Iteration: " + str(self.ctr))
-        self.ax1.set_xlabel('X')
-        self.ax1.set_ylabel('Y')
-        self.ax1.set_zlabel('Z')
+        self.ax1.set_xlabel('x_1')
+        self.ax1.set_ylabel('x_2')
+        self.ax1.set_zlabel('x_3')
         self.scatter1 = None
         # fitness
         self.ax2 = self.fig.add_subplot(122, projection='3d')
         self.ax2.set_title("Fitness Relation to Target")
-        self.ax2.set_xlabel('X')
-        self.ax2.set_ylabel('Y')
-        self.ax2.set_zlabel('Z')
+        self.ax2.set_xlabel('x_1')
+        self.ax2.set_ylabel('x_2')
+        self.ax2.set_zlabel('x_3')
         self.scatter2 = None
 
     def debug_message_printout(self, txt):
@@ -148,12 +133,14 @@ class TestGraph():
             self.ax1.set_title("Search Locations, Iteration: " + str(self.ctr))
             self.ax1.set_xlabel("$x_1$")
             self.ax1.set_ylabel("filler coords")
+            self.ax1.set_zlabel("filler coords")
             self.scatter = self.ax1.scatter(x_coords, x_plot_coords, edgecolors='b')   
         
         elif np.shape(x_coords)[1] == 2: #2-dim func
             self.ax1.set_title("Search Locations, Iteration: " + str(self.ctr))
             self.ax1.set_xlabel("$x_1$")
             self.ax1.set_ylabel("$x_2$")
+            self.ax1.set_zlabel("filler coords")
             self.scatter = self.ax1.scatter(x_coords[:,0], x_coords[:,1], edgecolors='b')
 
         elif np.shape(x_coords)[1] == 3: #3-dim func
@@ -168,21 +155,23 @@ class TestGraph():
         if np.shape(y_coords)[1] == 1: #1-dim obj func
             y_plot_filler = np.array(y_coords[:,0])*0.0
             self.ax2.set_title("Global Best Fitness Relation to Target")
-            self.ax2.set_xlabel("$F_{1}(x,y)$")
+            self.ax2.set_xlabel("$F_{1}(x_1,x_2)$")
             self.ax2.set_ylabel("filler coords")
+            self.ax2.set_zlabel("filler coords")
             self.scatter = self.ax2.scatter(y_coords, y_plot_filler,  marker='o', s=40, facecolor="none", edgecolors="k")
 
         elif np.shape(y_coords)[1] == 2: #2-dim obj func
             self.ax2.set_title("Global Best Fitness Relation to Target")
-            self.ax2.set_xlabel("$F_{1}(x,y)$")
-            self.ax2.set_ylabel("$F_{2}(x,y)$")
+            self.ax2.set_xlabel("$F_{1}(x_1,x_2)$")
+            self.ax2.set_ylabel("$F_{2}(x_1,x_2)$")
+            self.ax2.set_zlabel("filler coords")
             self.scatter = self.ax2.scatter(y_coords[:,0], y_coords[:,1], marker='o', s=40, facecolor="none", edgecolors="k")
 
         elif np.shape(y_coords)[1] == 3: #3-dim obj fun
             self.ax2.set_title("Global Best Fitness Relation to Target")
-            self.ax2.set_xlabel("$F_{1}(x,y)$")
-            self.ax2.set_ylabel("$F_{2}(x,y)$")
-            self.ax2.set_zlabel("$F_{3}(x,y)$")
+            self.ax2.set_xlabel("$F_{1}(x_1,x_2)$")
+            self.ax2.set_ylabel("$F_{2}(x_1,x_2)$")
+            self.ax2.set_zlabel("$F_{3}(x_1,x_2)$")
             self.scatter = self.ax2.scatter(y_coords[:,0], y_coords[:,1], y_coords[:,2], marker='o', s=40, facecolor="none", edgecolors="k")
 
 

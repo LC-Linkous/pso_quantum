@@ -9,8 +9,8 @@
 #       error messages directly from the 'swarm' class. Format updates are 
 #       for integration in the AntennaCAT GUI.
 #
-#   Author(s): Jonathan Lundquist, Lauren Linkous
-#   Last update: June 17, 2024 
+#   Author(s): Lauren Linkous, Jonathan Lundquist
+#   Last update: August 18, 2024
 ##--------------------------------------------------------------------\
 
 
@@ -29,15 +29,12 @@ import himmelblau.configs_F as func_configs         # single objective, 2D input
 if __name__ == "__main__":
     # Constant variables
     NO_OF_PARTICLES = 50         # Number of particles in swarm
-    T_MOD = 0.65                 # Variable time-step extinction coefficient
     E_TOL = 10 ** -6             # Convergence Tolerance
     MAXIT = 5000                 # Maximum allowed iterations
     BOUNDARY = 1                 # int boundary 1 = random,      2 = reflecting
                                     #              3 = absorbing,   4 = invisible
 
     WEIGHTS = [[0.7, 1.5, 0.5]]       # Update vector weights
-    VLIM = 0.5                        # Initial velocity limit
-
 
     
     # Objective function dependent variables
@@ -57,12 +54,11 @@ if __name__ == "__main__":
                                     #between the personal and global best positions
 
 
-
     best_eval = 1
 
     parent = None            # for the PSO_TEST ONLY
 
-    suppress_output = False  # Suppress the console output of particle swarm
+    suppress_output = True  # Suppress the console output of particle swarm
 
     allow_update = True      # Allow objective call to update state 
 
@@ -70,7 +66,7 @@ if __name__ == "__main__":
 
     mySwarm = swarm(NO_OF_PARTICLES, LB, UB,
                     WEIGHTS, OUT_VARS, TARGETS,
-                    T_MOD, E_TOL, MAXIT, BOUNDARY, 
+                    E_TOL, MAXIT, BOUNDARY, 
                     func_F, constr_F, BETA, IN_VARS)  
 
     # instantiation of particle swarm optimizer 

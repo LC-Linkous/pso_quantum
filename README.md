@@ -21,7 +21,6 @@ This branch of the repository is part of a series of replication studies. It is 
     * [Multi-Object Optimization](#multi-object-optimization)
     * [Objective Function Handling](#objective-function-handling)
       * [Internal Objective Function Example](#internal-objective-function-example)
-* [Error Handling](#error-handling)
 * [Example Implementations](#example-implementations)
     * [Basic Swarm Example](#basic-swarm-example)
     * [Detailed Messages](#detailed-messages)
@@ -211,12 +210,6 @@ Local minima at $(0.444453, -0.0630916)$
 
 Global minima at $(0.974857, -0.954872)$
 
-## Error Handling
-
-In the particle_swarm.py class, the objective function is called twice. Some optimizer/objective function/parameter combinations cause under/overflows when using numpy. It is a known bug in numpy that as of 5/2024 basic numpy cannot convert floats to longFloats or float128().
-
- * 1) When the constraints are called to verify if the particle is in bounds, and to apply the selected boundary method. At this point, the 'noErrors' boolean is used to confirm if the objection function resolves. If the objective function does not resolve, or the particle is out of bounds, the boundary conditions are applied.
- * 2) To evaluate the objective function as part of the traditional particle swarm algorithm
 
 ## Example Implementations
 
@@ -253,4 +246,3 @@ Publications featuring the code in this repo will be added as they become public
 ## Licensing
 
 The code in this repository has been released under GPL-2.0
-
