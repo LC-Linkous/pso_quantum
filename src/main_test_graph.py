@@ -24,8 +24,8 @@ from particle_swarm import swarm
 
 # OBJECTIVE FUNCTION SELECTION
 #import one_dim_x_test.configs_F as func_configs     # single objective, 1D input
-import himmelblau.configs_F as func_configs         # single objective, 2D input
-#import lundquist_3_var.configs_F as func_configs     # multi objective function
+#import himmelblau.configs_F as func_configs         # single objective, 2D input
+import lundquist_3_var.configs_F as func_configs     # multi objective function
 
 
 
@@ -80,7 +80,7 @@ class TestGraph():
         self.mySwarm = swarm(NO_OF_PARTICLES, LB, UB,
                         WEIGHTS, OUT_VARS, TARGETS,
                         E_TOL, MAXIT, BOUNDARY, func_F, constr_F,
-                        BETA, IN_VARS, parent, detailedWarnings)  
+                        BETA, parent, detailedWarnings)  
 
 
         # Matplotlib setup

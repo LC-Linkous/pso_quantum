@@ -11,7 +11,7 @@
 #
 #
 #   Author(s): Lauren Linkous, Jonathan Lundquist
-#   Last update: August 18, 2024
+#   Last update: November 22, 2024
 ##--------------------------------------------------------------------\
 
 import numpy as np
@@ -25,7 +25,7 @@ class swarm:
     #  [[float, ...]],  int, [[float, ...]],  
     #  float, int, int, 
     #  func, func,
-    #  float, int,
+    #  float, 
     #  class obj, bool) 
     # int boundary 1 = random,      2 = reflecting
     #              3 = absorbing,   4 = invisible
@@ -33,9 +33,10 @@ class swarm:
                  weights, output_size, targets,
                  E_TOL, maxit, boundary, 
                  obj_func, constr_func, 
-                 beta= 0.5,input_size=3,
+                 beta= 0.5,
                  parent=None, detailedWarnings=False):  
         
+
         # Optional parent class func call to write out values that trigger constraint issues
         self.parent = parent 
         # Additional output for advanced debugging to TERMINAL. 
@@ -115,7 +116,7 @@ class swarm:
             '''
             self.beta = beta
             self.output_size = output_size
-            self.input_size = input_size
+            self.input_size = len(lbound)
             self.Active = np.ones((NO_OF_PARTICLES))                        
             self.Gb = sys.maxsize*np.ones((1,np.max([heightl, widthl])))   
             self.F_Gb = sys.maxsize*np.ones((1,output_size))                
