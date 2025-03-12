@@ -42,7 +42,6 @@ if __name__ == "__main__":
 
     # optimizer constants
     WEIGHTS = [[0.5, 0.7, 0.78]]       # Update vector weights
-    VLIM = 1                           # Initial velocity limit
     BETA = 0.5                         # Float constant controlling influence 
                                        # between the personal and global best positions
 

@@ -165,7 +165,8 @@ This is an example for if you've had a difficult time with the requirements.txt 
 
     # optimizer constants
     WEIGHTS = [[0.5, 0.7, 0.78]]       # Update vector weights
-    VLIM = 1                           # Initial velocity limit
+    BETA = 0.5                         # Float constant controlling influence 
+                                       # between the personal and global best positions
 
     best_eval = 1
     parent = None            # for the optimizer test ONLY
