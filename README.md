@@ -24,13 +24,14 @@ pso_quantum has been updated to increase modularity with the optimizer suite col
     * [Boundary Types](#boundary-types)
     * [Multi-Object Optimization](#multi-object-optimization)
     * [Objective Function Handling](#objective-function-handling)
-      * [Internal Objective Function Example](#internal-objective-function-example)
+      * [Creating a Custom Objective Function](#creating-a-custom-objective-function)
+      * [Internal Objective Function Example](internal-objective-function-example)
 * [Example Implementations](#example-implementations)
-    * [Basic Swarm Example](#basic-swarm-example)
+    * [Basic PSO Example](#basic-pso-example)
     * [Detailed Messages](#detailed-messages)
     * [Realtime Graph](#realtime-graph)
 * [References](#references)
-* [Publications and Integration](#publications-and-integration)
+* [Related Publications and Repositories](#related-publications-and-repositories)
 * [Licensing](#licensing)  
 
 ## Particle Swarm Optimization
