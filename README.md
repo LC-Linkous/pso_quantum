@@ -26,7 +26,7 @@ pso_quantum has been updated to increase modularity with the optimizer suite col
     * [Objective Function Handling](#objective-function-handling)
       * [Creating a Custom Objective Function](#creating-a-custom-objective-function)
       * [Internal Objective Function Example](internal-objective-function-example)
-      * [Target vs. Threshold Configuration](#target-vs-threshold-configuration)
+     * [Target vs. Threshold Configuration](#target-vs-threshold-configuration)
 * [Example Implementations](#example-implementations)
     * [Basic PSO Example](#basic-pso-example)
     * [Detailed Messages](#detailed-messages)
