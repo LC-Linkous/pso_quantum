@@ -11,7 +11,7 @@
 #
 #
 #   Author(s): Lauren Linkous, Jonathan Lundquist
-#   Last update: March 12, 2025
+#   Last update: June 19, 2025
 ##--------------------------------------------------------------------\
 
 import numpy as np
@@ -113,17 +113,12 @@ class swarm:
             variation = ubound-lbound
 
 
-            raw = np.multiply(self.rng.random((1,np.max([heightl, widthl]))), variation)+lbound   
-            self.M = np.array([[round(val, self.number_decimals) for val in row] for row in raw])  
-            # self.M = np.array(np.multiply(self.rng.random((1,np.max([heightl, widthl]))), 
-            #                                                     variation)+lbound)    
-
+            self.M = np.round(np.array(np.multiply(self.rng.random((1,np.max([heightl, widthl]))), variation)+lbound), self.number_decimals)   
 
             for i in range(2,int(NO_OF_PARTICLES)+1):
                 
-                rawM = np.multiply(self.rng.random((1,np.max([heightl, widthl]))), variation)+lbound 
-                M = np.array([[round(val, self.number_decimals) for val in row] for row in rawM])  
-
+                M = np.round(np.array(np.multiply(self.rng.random((1,np.max([heightl, widthl]))), variation)+lbound), self.number_decimals) 
+                 
                 self.M = \
                     np.vstack([self.M, 
                                M])

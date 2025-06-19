@@ -10,7 +10,7 @@
 #       for integration in the AntennaCAT GUI.
 #
 #   Author(s): Lauren Linkous, Jonathan Lundquist
-#   Last update: March 12, 2025
+#   Last update: June 19, 2025
 ##--------------------------------------------------------------------\
 
 import pandas as pd
@@ -79,7 +79,8 @@ if __name__ == "__main__":
                             func_F, constr_F,
                             opt_df,
                             parent=parent, 
-                            evaluate_threshold=evaluate_threshold, obj_threshold=THRESHOLD)    
+                            evaluate_threshold=evaluate_threshold, obj_threshold=THRESHOLD,
+                            decimal_limit=5)    
 
     while not myOptimizer.complete():
         # step through optimizer processing
