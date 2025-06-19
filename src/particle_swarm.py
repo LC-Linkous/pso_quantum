@@ -25,7 +25,8 @@ class swarm:
     # func, func,
     # dataFrame,
     # class obj, 
-    # bool, [int, int, ...])  
+    # bool, [int, int, ...], 
+    # int) 
     #  
     # opt_df contains class-specific tuning parameters
     # NO_OF_PARTICLES: int
@@ -38,11 +39,18 @@ class swarm:
                  obj_func, constr_func, 
                  opt_df,
                  parent=None, 
-                 evaluate_threshold=False, obj_threshold=None):  
+                 evaluate_threshold=False, obj_threshold=None,
+                 decimal_limit = 4): 
 
    
         # Optional parent class func call to write out values that trigger constraint issues
         self.parent = parent 
+
+
+        self.number_decimals = int(decimal_limit)  # limit the number of decimals
+                                                    # used in cases where real life 
+                                                    # has limitations on resolution
+
 
 
         #evaluation method for targets
@@ -105,16 +113,20 @@ class swarm:
             variation = ubound-lbound
 
 
-            self.M = np.array(np.multiply(self.rng.random((1,np.max([heightl, widthl]))), 
-                                                                variation)+lbound)    
+            raw = np.multiply(self.rng.random((1,np.max([heightl, widthl]))), variation)+lbound   
+            self.M = np.array([[round(val, self.number_decimals) for val in row] for row in raw])  
+            # self.M = np.array(np.multiply(self.rng.random((1,np.max([heightl, widthl]))), 
+            #                                                     variation)+lbound)    
+
 
             for i in range(2,int(NO_OF_PARTICLES)+1):
                 
+                rawM = np.multiply(self.rng.random((1,np.max([heightl, widthl]))), variation)+lbound 
+                M = np.array([[round(val, self.number_decimals) for val in row] for row in rawM])  
+
                 self.M = \
                     np.vstack([self.M, 
-                               np.multiply( self.rng.random((1,np.max([heightl, widthl]))), 
-                                                                               variation) 
-                                                                               + lbound])
+                               M])
 
             '''
             self.M                      : An array of current particle locations.
@@ -265,12 +277,18 @@ class swarm:
         # and may cause a buffer overflow with large exponents (a bug that was found experimentally)
         update = self.check_bounds(particle) or not self.constr_func(self.M[particle]) 
         if update > 0:
-            while(self.check_bounds(particle)>0) or (self.constr_func(self.M[particle])==False): 
-                variation = self.ubound-self.lbound
-                self.M[particle] = \
-                    np.squeeze(self.rng.random() * 
-                                np.multiply(np.ones((1,np.shape(self.M)[1])),
-                                            variation) + self.lbound)
+            while (self.check_bounds(particle) > 0) or (self.constr_func(self.M[particle]) == False):
+                variation = self.ubound - self.lbound
+                self.M[particle] = np.round(
+                    np.squeeze(
+                        self.rng.random() *
+                        np.multiply(np.ones((1, np.shape(self.M)[1])), variation) +
+                        self.lbound
+                    ),
+                    self.number_decimals
+                )
+
+
             
     def reflecting_bound(self, particle):        
         update = self.check_bounds(particle)
@@ -320,16 +338,17 @@ class swarm:
     def update_point(self,particle):
         #updates particle location. in quantum inspired algs, this merges the classical position& velocity update
         # duplicate locals to stick with eqs. in README
-        self.Mlast = 1*self.M[particle]    # save last loc
-        p = self.Pb[particle]              # personal best
-        g = self.Gb                        # global best
+        self.Mlast = self.weights[0][0]*self.M[particle]    # save last loc
+        p = self.weights[0][1]*self.Pb[particle]            # personal best
+        g = self.weights[0][2]*self.Gb                      # global best
         
         # Mean Best Position
         mb = self.beta* p + (1 - self.beta) * g
 
         # Position Update (Update Rule)
         u = self.rng.uniform(size=(1,self.input_size))
-        self.M[particle] = mb + self.beta * np.abs(p - g) * np.log(1 / u)
+
+        self.M[particle] = np.round(mb + self.beta * np.abs(p - g) * np.log(1 / u), self.number_decimals)
 
     def converged(self):
         convergence = np.linalg.norm(self.F_Gb) < self.E_TOL

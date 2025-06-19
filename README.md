@@ -187,14 +187,17 @@ This is an example for if you've had a difficult time with the requirements.txt 
     myOptimizer = swarm(LB, UB, TARGETS, TOL, MAXIT,
                             func_F, constr_F,
                             opt_df,
-                            parent=parent)  
+                            parent=parent, 
+                            evaluate_threshold=evaluate_threshold, obj_threshold=THRESHOLD,
+                            decimal_limit = 4)   
 
     # arguments should take form: 
     # swarm([[float, float, ...]], [[float, float, ...]], [[float, ...]], float, int,
     # func, func,
     # dataFrame,
     # class obj, 
-    # bool, [int, int, ...])  
+    # bool, [int, int, ...], 
+    # int) 
     #  
     # opt_df contains class-specific tuning parameters
     # NO_OF_PARTICLES: int
