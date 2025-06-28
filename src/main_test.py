@@ -10,7 +10,7 @@
 #       for integration in the AntennaCAT GUI.
 #
 #   Author(s): Lauren Linkous, Jonathan Lundquist
-#   Last update: June 19, 2025
+#   Last update: June 27, 2025
 ##--------------------------------------------------------------------\
 
 import pandas as pd
@@ -53,7 +53,8 @@ if __name__ == "__main__":
 
 
     # optimizer constants
-    WEIGHTS = [[0.5, 0.7, 0.78]]       # Update vector weights
+    WEIGHTS = [[0.5, 0.7, 0.78]]       # SET the optimizer weights
+                                       # # always 3 values. 1: last location, 2: personal best, 3: global best 
     BETA = 0.5                         # Float constant controlling influence 
                                        # between the personal and global best positions
 
@@ -68,7 +69,8 @@ if __name__ == "__main__":
     opt_params = {'NO_OF_PARTICLES': [NO_OF_PARTICLES], # Number of particles in swarm
                 'BOUNDARY': [BOUNDARY],                 # int boundary 1 = random,      2 = reflecting
                                                         #   3 = absorbing,   4 = invisible
-                'WEIGHTS': [WEIGHTS],                   # Update vector weights
+                'WEIGHTS': [WEIGHTS],                   # SET the optimizer weights
+                                                        # # always 3 values. 1: last location, 2: personal best, 3: global best 
                 'BETA':  [BETA] }                       # Float constant controlling influence 
                                                         #       between the personal and global best positions
     # dataframe conversion

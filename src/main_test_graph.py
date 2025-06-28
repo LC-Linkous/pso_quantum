@@ -12,7 +12,7 @@
 #       matplotlib plot of particle location
 #
 #   Author(s): Lauren Linkous, Jonathan Lundquist
-#   Last update: March 12, 2025
+#   Last update: June 27, 2025
 ##--------------------------------------------------------------------\
 
 
@@ -52,7 +52,8 @@ class TestGraph():
         TARGETS = func_configs.TARGETS    # Target values for output
 
         # optimizer constants
-        WEIGHTS = [[0.5, 0.7, 0.78]]       # Update vector weights
+        WEIGHTS = [[0.5, 0.7, 0.78]]       # SET the optimizer weights
+                                           # # always 3 values. 1: last location, 2: personal best, 3: global best 
         BETA = 0.5                         # Float constant controlling influence 
                                            # between the personal and global best positions
 
@@ -67,7 +68,8 @@ class TestGraph():
         opt_params = {'NO_OF_PARTICLES': [NO_OF_PARTICLES], # Number of particles in swarm
                     'BOUNDARY': [BOUNDARY],                 # int boundary 1 = random,      2 = reflecting
                                                             #   3 = absorbing,   4 = invisible
-                    'WEIGHTS': [WEIGHTS],                   # Update vector weights
+                    'WEIGHTS': [WEIGHTS],                   # SET the optimizer weights
+                                                            # # always 3 values. 1: last location, 2: personal best, 3: global best 
                     'BETA':  [BETA] }                       # Float constant controlling influence 
                                                             #       between the personal and global best positions
 
