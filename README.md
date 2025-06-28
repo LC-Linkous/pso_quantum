@@ -167,7 +167,7 @@ This is an example for if you've had a difficult time with the requirements.txt 
     TARGETS = func_configs.TARGETS    # Target values for output
 
     # optimizer constants
-    WEIGHTS = [[0.5, 0.7, 0.78]]       # Update vector weights
+    WEIGHTS = [[0.5, 0.7, 0.78]]       # SET vector weights. Allways 3. 1: current position, 2: personal best, 3: global best
     BETA = 0.5                         # Float constant controlling influence 
                                        # between the personal and global best positions
 
